@@ -1,11 +1,14 @@
 package com.enigma.learnspringboot.service.impl;
 
+import com.enigma.learnspringboot.dto.CustomersSearchDTO;
 import com.enigma.learnspringboot.entity.Customer;
 import com.enigma.learnspringboot.repository.CustomerRepository;
 import com.enigma.learnspringboot.service.CustomerService;
+import com.enigma.learnspringboot.spesification.CustomerSpesification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,7 +27,7 @@ public class CustomerServicelmpl implements CustomerService {
 
     @Override
     public Customer getById(String id) {
-        return customerRepository.findById(Integer.valueOf(id)).get();
+        return customerRepository.findById(String.valueOf(id)).get();
     }
 
     @Override
@@ -34,16 +37,20 @@ public class CustomerServicelmpl implements CustomerService {
 
     @Override
     public void deleteCustomer(String id) {
-        customerRepository.deleteById(Integer.valueOf(id));
+        customerRepository.deleteById(String.valueOf(id));
     }
 
     @Override
-    public Page<Customer> getCustomerPage(Pageable pageable) {
-        return null;
+    public Page<Customer> getCustomerPage(CustomersSearchDTO customersSearchDTO, Pageable pageable) {
+        Specification<Customer> customerSpecification = CustomerSpesification.getSpesification
+                (customersSearchDTO);
+        return customerRepository.findAll(customerSpecification, pageable);
     }
 
     @Override
-    public List<Customer> getCustomerByName(String firstname) {
-        return customerRepository.findCustomerByFirstnameContains(firstname);
+    public List<Customer> getCustomerByName(String firstname, String lastname) {
+        return customerRepository.
+                findCustomerByFirstnameContainingIgnoreCaseAndLastnameContainingIgnoreCase
+                (firstname, lastname);
     }
 }

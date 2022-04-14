@@ -2,6 +2,7 @@ package com.enigma.learnspringboot.controller;
 
 
 import com.enigma.learnspringboot.constant.apiURLConstant;
+import com.enigma.learnspringboot.dto.CustomersSearchDTO;
 import com.enigma.learnspringboot.entity.Customer;
 import com.enigma.learnspringboot.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,20 +43,24 @@ public class CostumerController {
         customerService.deleteCustomer(id);//memanggil fungsi dari class repository
     }
 
-//    @GetMapping()
-//    public Page<Customer> getCustomerPage(@RequestParam(name = "page", defaultValue ="0") Integer page,
-//                                           @RequestParam(name = "size", defaultValue = "3")Integer sizePerPage,
-//                                           @RequestParam(name = "sort", defaultValue = "name")String sort,
-//                                           @RequestParam(name = "direction" ,defaultValue = "asc")String direction){
-//        Sort sort1 = Sort.by(Sort.Direction.fromString(direction),sort);//nilai from string hasilnya uppercase
-//        // dan direction ambil dari class direction ASC/DESC
-//        Pageable pageable = PageRequest.of(page,sizePerPage, sort1);
-//        return customerService.getCustomerPage(pageable);
-//    }
-
-    @GetMapping
-    public List<Customer> searchByName(@RequestParam String name){
-        return customerService.getCustomerByName(name);
+    @GetMapping()
+    public Page<Customer> getCustomerPage(@RequestBody CustomersSearchDTO customersSearchDTO,
+                                          @RequestParam(name = "page", defaultValue ="0") Integer page,
+                                          @RequestParam(name = "size", defaultValue = "3")Integer sizePerPage,
+                                          @RequestParam(name = "sort", defaultValue = "firstname")String sort,
+                                          @RequestParam(name = "direction" ,defaultValue = "asc")String direction){
+        Sort sort1 = Sort.by(Sort.Direction.fromString(direction),sort);//nilai from string hasilnya uppercase
+        // dan direction ambil dari class direction ASC/DESC
+        Pageable pageable = PageRequest.of(page,sizePerPage, sort1);
+        return customerService.getCustomerPage(customersSearchDTO, pageable);
     }
 
+//    @GetMapping
+//    public List<Customer> searchByName(@RequestBody
+//                                        @RequestParam String name,
+//                                       @RequestParam String lastname){
+//        return customerService.getCustomerByName(name,lastname);
+//    }
+
 }
+

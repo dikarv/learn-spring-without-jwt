@@ -1,5 +1,6 @@
 package com.enigma.learnspringboot.service;
 
+import com.enigma.learnspringboot.dto.CustomersSearchDTO;
 import com.enigma.learnspringboot.entity.Customer;
 import com.enigma.learnspringboot.entity.Product;
 import org.springframework.data.domain.Page;
@@ -12,6 +13,8 @@ public interface CustomerService {
     public Customer getById(String id);
     public Customer saveCustomer(Customer customer);
     public void deleteCustomer(String id);
-    public Page<Customer> getCustomerPage(Pageable pageable);
-    public List<Customer> getCustomerByName(String firstname);
+    public Page<Customer> getCustomerPage(CustomersSearchDTO customersSearchDTO, Pageable pageable);
+
+
+    public List<Customer> getCustomerByName(String firstname, String lastname);
 }
