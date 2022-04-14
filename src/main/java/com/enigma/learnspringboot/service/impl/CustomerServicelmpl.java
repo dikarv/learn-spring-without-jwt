@@ -23,8 +23,8 @@ public class CustomerServicelmpl implements CustomerService {
     }
 
     @Override
-    public Customer getById(Integer id) {
-        return customerRepository.findById(id).get();
+    public Customer getById(String id) {
+        return customerRepository.findById(Integer.valueOf(id)).get();
     }
 
     @Override
@@ -33,15 +33,17 @@ public class CustomerServicelmpl implements CustomerService {
     }
 
     @Override
-    public void deleteCustomer(Integer id) {
-        customerRepository.deleteById(id);
-
+    public void deleteCustomer(String id) {
+        customerRepository.deleteById(Integer.valueOf(id));
     }
 
     @Override
     public Page<Customer> getCustomerPage(Pageable pageable) {
-        return customerRepository.findAll(pageable);
-        
+        return null;
+    }
 
+    @Override
+    public List<Customer> getCustomerByName(String firstname) {
+        return customerRepository.findCustomerByFirstnameContains(firstname);
     }
 }

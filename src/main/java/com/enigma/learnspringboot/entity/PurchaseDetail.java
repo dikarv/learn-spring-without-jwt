@@ -8,22 +8,27 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
+
 @Entity
-@Table(name = "mst_product")
-@Getter@Setter
+@Table(name = "trx_purchase_detail")
+@Getter
+@Setter
 @NoArgsConstructor//getter setter menggunakan lombok
 @AllArgsConstructor
-public class Product {
+public class PurchaseDetail {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name ="system-uuid" ,strategy = "uuid")
-    @Column(name = "product_id")
+    @Column(name = "purchase_detail_id")
     private String id;
-    private String name;
-    @Column(name = "product_price")
-    private Integer productPrice;
-    private Integer stock;
-
+    private Double pricesell;
+    private Integer quantity;
+    @ManyToOne
+    @JoinColumn(name = "purchase_id")
+    private Purchase purchase;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
 
 }

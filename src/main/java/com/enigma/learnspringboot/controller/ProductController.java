@@ -25,7 +25,7 @@ public class ProductController {
 //    }
     @GetMapping("/products/{id}")
     //nerima balikan dari servie
-    public Product getId(@PathVariable Integer id){
+    public Product getId(@PathVariable String id){
         return productService.getById(id);
         //kirim ke service .impl
     }
@@ -42,7 +42,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/products/delete")//mapping method alamat dan method yang digunakan oleh REST api d
-    public void deleteProduct(@RequestParam Integer id){//memebuat method dimana parameter mengisi alamt yang ada
+    public void deleteProduct(@RequestParam String id){//memebuat method dimana parameter mengisi alamt yang ada
         productService.deleteProduct(id);//memanggil fungsi dari class repository
     }
 

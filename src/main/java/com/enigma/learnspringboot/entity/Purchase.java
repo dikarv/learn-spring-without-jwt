@@ -1,5 +1,7 @@
 package com.enigma.learnspringboot.entity;
 
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,23 +9,24 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
-@Table(name = "mst_product")
-@Getter@Setter
+@Table(name = "trx_purchase")
+@Getter
+@Setter
 @NoArgsConstructor//getter setter menggunakan lombok
 @AllArgsConstructor
-public class Product {
+public class Purchase {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name ="system-uuid" ,strategy = "uuid")
-    @Column(name = "product_id")
+    @Column(name = "purchase_id")
     private String id;
-    private String name;
-    @Column(name = "product_price")
-    private Integer productPrice;
-    private Integer stock;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date purchaseDate;
 
-
-
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 }

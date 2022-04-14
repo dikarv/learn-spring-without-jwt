@@ -1,41 +1,45 @@
 package com.enigma.learnspringboot.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.rmi.server.UID;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity    ///this class merupakan sebuah modeling / class yang akan di mapping oleh xml.configure hibernate
 @Table(name = "mst_customer")
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Customer {
     //modeling
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_generator")//generator untuk sequence
-    @SequenceGenerator(name = "customer_generator", sequenceName = "customer_id_seq", allocationSize = 1)//increment +1
-    private Integer id;
-    private String name;
-    private String address;
-    private Integer phone;
-    @Column(name = "birthdate")
-    private Date birthDate;
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name ="system-uuid" ,strategy = "uuid")
+    @Column(name = "customer_id")
+    private String id;
+    private String firstname;
+    private String lastname;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date dateOfBirth;
     private String status;
-    private String email;
+    private String userName;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+    //mappedBy customer berasal dari nama class yang diubah menjadi camel case
+//    @OneToMany(mappedBy = "customer",cascade = CascadeType.PERSIST)//akan menambahkan transaksi ke purchase
+//    private List<Purchase> purchases = new ArrayList<>();//bisa lihat transaksinya ada apa aja
 
-    public Customer(Integer id, String name, String address, Integer phone, Date birthDate, String status, String email, String password) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.phone = phone;
-        this.birthDate = birthDate;
-        this.status = status;
-        this.email = email;
-        this.password = password;
-    }
+
+
 
 }

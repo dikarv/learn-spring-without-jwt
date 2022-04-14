@@ -9,8 +9,9 @@ import java.util.List;
 
 public interface CustomerService {
     public List<Customer> getAllProduct();
-    public Customer getById(Integer id);
+    public Customer getById(String id);
     public Customer saveCustomer(Customer customer);
-    public void deleteCustomer(Integer id);
+    public void deleteCustomer(String id);
     public Page<Customer> getCustomerPage(Pageable pageable);
+    public List<Customer> getCustomerByName(String firstname);
 }
