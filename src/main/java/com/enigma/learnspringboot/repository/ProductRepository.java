@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.domain.Pageable;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Integer> {
+public interface ProductRepository extends JpaRepository<Product, String> {
     // Entity maping ke class PRoduct, Type data Integer karena id pada class Product Integer
     //JPA repositori membungkus hibernate menjadi fungsi gungsi yang akan digunakan jadi tidak perlu ada DAO
     //

@@ -21,26 +21,27 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getAllProduct() {
-        return null;
+        return productRepository.findAll();
     }
 
     @Override
     public Product getById(String id) {
-        return null;
+        return productRepository.findById(id).get();
     }
 
     @Override
     public Product saveProduct(Product product) {
-        return null;
+        return productRepository.save(product);
     }
 
     @Override
     public void deleteProduct(String id) {
+        productRepository.deleteById(id);
 
     }
 
     @Override
     public Page<Product> getProductPerPage(Pageable pageable) {
-        return null;
+        return productRepository.findAll(pageable);
     }
 }

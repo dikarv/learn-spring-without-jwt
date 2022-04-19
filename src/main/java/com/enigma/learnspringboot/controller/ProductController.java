@@ -49,7 +49,7 @@ public class ProductController {
     @GetMapping("/products")
     public Page<Product> getproductPerPage(@RequestParam(name = "page", defaultValue ="0") Integer page,
                                            @RequestParam(name = "size", defaultValue = "3")Integer sizePerPage,
-                                           @RequestParam(name = "sortBy", defaultValue = "productName")String sort,
+                                           @RequestParam(name = "sortBy", defaultValue = "name")String sort,
                                            @RequestParam(name = "direction" ,defaultValue = "asc")String direction){
         Sort sort1 = Sort.by(Sort.Direction.fromString(direction),sort);
         Pageable pageable = PageRequest.of(page,sizePerPage, sort1);

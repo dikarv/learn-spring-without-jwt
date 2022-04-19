@@ -1,7 +1,9 @@
 package com.enigma.learnspringboot.service.impl;
 
+import com.enigma.learnspringboot.constant.ResponsMessage;
 import com.enigma.learnspringboot.dto.CustomersSearchDTO;
 import com.enigma.learnspringboot.entity.Customer;
+import com.enigma.learnspringboot.exception.DataNotFoundException;
 import com.enigma.learnspringboot.repository.CustomerRepository;
 import com.enigma.learnspringboot.service.CustomerService;
 import com.enigma.learnspringboot.spesification.CustomerSpesification;
@@ -27,8 +29,14 @@ public class CustomerServicelmpl implements CustomerService {
 
     @Override
     public Customer getById(String id) {
+        if (!customerRepository.findById(id).isPresent()) {
+            String message = String.format(ResponsMessage.DATA_NOTFOUND, "customer", id);
+            throw new DataNotFoundException(message);
+        }//cek datanta ada atau tidak
         return customerRepository.findById(String.valueOf(id)).get();
     }
+
+
 
     @Override
     public Customer saveCustomer(Customer customer) {

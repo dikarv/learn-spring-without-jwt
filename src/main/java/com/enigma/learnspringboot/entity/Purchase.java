@@ -9,7 +9,9 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "trx_purchase")
@@ -29,4 +31,7 @@ public class Purchase {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
+
+    @OneToMany(mappedBy = "purchase")
+    private List<PurchaseDetail> purchaseDetails = new ArrayList<>();
 }
