@@ -28,10 +28,11 @@ public class Purchase {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date purchaseDate;
 
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(mappedBy = "purchase")
+    @OneToMany(mappedBy = "purchase")//
     private List<PurchaseDetail> purchaseDetails = new ArrayList<>();
 }

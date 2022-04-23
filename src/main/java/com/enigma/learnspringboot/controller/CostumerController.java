@@ -8,6 +8,8 @@ import com.enigma.learnspringboot.entity.Customer;
 import com.enigma.learnspringboot.service.CustomerService;
 import com.enigma.learnspringboot.utils.PageResponseWrapper;
 import com.enigma.learnspringboot.utils.Respons;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,11 +19,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(apiURLConstant.CUSTOMER)
+@EnableWebMvc
 public class CostumerController {
 
     @Autowired
@@ -39,7 +43,7 @@ public class CostumerController {
         String message = String.format(ResponsMessage.DATA_INSERTED,"customer");
         respons.setMessage(message);
         respons.setData(customerService.saveCustomer(customer));
-        return  ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON).body(respons);
+         return  ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON).body(respons);
         //repsons saat kita sukses menginputkan data
 
     }
@@ -54,17 +58,22 @@ public class CostumerController {
         customerService.deleteCustomer(id);//memanggil fungsi dari class repository
     }
 
+//    @GetMapping()
+//    public PageResponseWrapper<Customer> searchCustomerPerPage(@RequestBody CustomersSearchDTO customersSearchDTO,
+//                                               @RequestParam(name = "page", defaultValue ="0") Integer page,
+//                                               @RequestParam(name = "size", defaultValue = "3")Integer sizePerPage,
+//                                               @RequestParam(name = "sort", defaultValue = "firstname")String sort,
+//                                               @RequestParam(name = "direction" ,defaultValue = "asc")String direction){
+//        Sort sort1 = Sort.by(Sort.Direction.fromString(direction),sort);//nilai from string hasilnya uppercase
+//        // dan direction ambil dari class direction ASC/DESC
+//        Pageable pageable = PageRequest.of(page,sizePerPage, sort1);
+//        Page<Customer> customerPage = customerService.getCustomerPage(customersSearchDTO, pageable);
+//        return new PageResponseWrapper<>(customerPage);
+//    }
+
     @GetMapping()
-    public PageResponseWrapper<Customer> searchCustomerPerPage(@RequestBody CustomersSearchDTO customersSearchDTO,
-                                               @RequestParam(name = "page", defaultValue ="0") Integer page,
-                                               @RequestParam(name = "size", defaultValue = "3")Integer sizePerPage,
-                                               @RequestParam(name = "sort", defaultValue = "firstname")String sort,
-                                               @RequestParam(name = "direction" ,defaultValue = "asc")String direction){
-        Sort sort1 = Sort.by(Sort.Direction.fromString(direction),sort);//nilai from string hasilnya uppercase
-        // dan direction ambil dari class direction ASC/DESC
-        Pageable pageable = PageRequest.of(page,sizePerPage, sort1);
-        Page<Customer> customerPage = customerService.getCustomerPage(customersSearchDTO, pageable);
-        return new PageResponseWrapper<>(customerPage);
+    public List<Customer> getStatusCustomer(@RequestParam String status){
+        return customerService.getCustomerStatus(status);
     }
 
 //    @GetMapping

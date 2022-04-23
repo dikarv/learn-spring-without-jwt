@@ -23,7 +23,8 @@ public class CustomerServicelmpl implements CustomerService {
 
 
     @Override
-    public List<Customer> getAllProduct() {
+    public List<Customer> getAllCustomer() {
+
         return customerRepository.findAll();
     }
 
@@ -53,6 +54,11 @@ public class CustomerServicelmpl implements CustomerService {
         Specification<Customer> customerSpecification = CustomerSpesification.getSpesification
                 (customersSearchDTO);
         return customerRepository.findAll(customerSpecification, pageable);
+    }
+
+    @Override
+    public List<Customer> getCustomerStatus(String status) {
+        return customerRepository.findStatus(status);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.enigma.learnspringboot.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,8 +24,10 @@ public class PurchaseDetail {
     private String id;
     private Double pricesell;
     private Integer quantity;
+
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "purchase_id")
+    @JoinColumn(name = "purchase_id")//column purchase_id
     private Purchase purchase;
     @ManyToOne
     @JoinColumn(name = "product_id")

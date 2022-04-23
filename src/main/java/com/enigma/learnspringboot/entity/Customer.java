@@ -32,6 +32,8 @@ public class Customer {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date dateOfBirth;
     private String status;
+    @Column (name = "phone_number")
+    private String phoneNumber;
     private String userName;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
@@ -40,6 +42,13 @@ public class Customer {
 //    private List<Purchase> purchases = new ArrayList<>();//bisa lihat transaksinya ada apa aja
 
 
-
-
+    public Customer(String id, String firstname, String lastname, Date dateOfBirth, String status, String userName, String password) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.dateOfBirth = dateOfBirth;
+        this.status = status;
+        this.userName = userName;
+        this.password = password;
+    }
 }
