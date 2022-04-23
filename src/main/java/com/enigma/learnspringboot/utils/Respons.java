@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class Respons <T>{//type data general atau generic
-
+    //custom exception
     private String message;
     private T data;
 
