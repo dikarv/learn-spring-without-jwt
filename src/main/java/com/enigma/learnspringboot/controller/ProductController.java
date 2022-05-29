@@ -33,18 +33,18 @@ public class ProductController {
 //    public List<Product> getAllProduct(){
 //        return productService.getAllProduct();
 //    }
-    @GetMapping("/products/{id}")
+    @GetMapping("/form/{id}")
     //nerima balikan dari servie
     public Product getId(@PathVariable String id){
         return productService.getById(id);
         //kirim ke service .impl
     }
 
-//    @PostMapping("/products")
-//    public Product createProduct(@RequestBody Product product){
-//        return  productService.saveProduct(product);
-//
-//    }
+    @PostMapping("/form")
+    public Product createProduct(@RequestBody Product product){
+        return  productService.saveProduct(product);
+
+    }
 
 //    @PostMapping("/products")
 //    public ResponseEntity<Respons<Product>> createProduct(@RequestBody Product product){
@@ -57,38 +57,38 @@ public class ProductController {
 //
 //    }
 
-    @PutMapping("/products/update")
+    @PutMapping("/form")
     public void updatePRoduct(@RequestBody Product product){
         productService.saveProduct(product);
     }
 
-    @DeleteMapping("/products/delete")//mapping method alamat dan method yang digunakan oleh REST api d
-    public void deleteProduct(@RequestParam String id){//memebuat method dimana parameter mengisi alamt yang ada
+    @DeleteMapping("/delete/{id}")//mapping method alamat dan method yang digunakan oleh REST api d
+    public void deleteProduct(@PathVariable String id){//memebuat method dimana parameter mengisi alamt yang ada
         productService.deleteProduct(id);//memanggil fungsi dari class repository
     }
 
-    @GetMapping("/products")
+    @GetMapping("/list")
     public Page<Product> getproductPerPage(@RequestParam(name = "page", defaultValue ="0") Integer page,
-                                           @RequestParam(name = "size", defaultValue = "3")Integer sizePerPage,
+                                           @RequestParam(name = "size", defaultValue = "5")Integer sizePerPage,
                                            @RequestParam(name = "sortBy", defaultValue = "name")String sort,
-                                           @RequestParam(name = "direction" ,defaultValue = "asc")String direction){
+                                           @RequestParam(name = "direction" ,defaultValue = "desc")String direction){
         Sort sort1 = Sort.by(Sort.Direction.fromString(direction),sort);
         Pageable pageable = PageRequest.of(page,sizePerPage, sort1);
         return productService.getProductPerPage(pageable);
     }
 
 
-    @PostMapping("/picture")
-    public void registerProductPicture(@RequestPart(name = "picture",required = false )MultipartFile file,
-                                       @RequestPart(name = "product") String product){
-        Product product1 = new Product();
-        try{
-            ObjectMapper objectMapper = new ObjectMapper();
-            product1 = objectMapper.readValue(product, Product.class);
-
-        }  catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        productService.saveProductPicture(product1, file);
-    }
+//    @PostMapping("/picture")
+//    public void registerProductPicture(@RequestPart(name = "picture",required = false )MultipartFile file,
+//                                       @RequestPart(name = "product") String product){
+//        Product product1 = new Product();
+//        try{
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            product1 = objectMapper.readValue(product, Product.class);
+//
+//        }  catch (JsonProcessingException e) {
+//            e.printStackTrace();
+//        }
+//        productService.saveProductPicture(product1, file);
+//    }
 }
